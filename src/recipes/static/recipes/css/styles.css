@@ -31,13 +31,13 @@
     border-radius: 3px; 
 }
 
-.recipe-grid {
+.recipe_grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 23px 0 23px 23px;
-    grid-gap: 23px;
+    padding: 23px 20px;
+    grid-gap: 11px;
     background: rgba(0, 0, 0, 0.5);
-    width: 70vw;
+    width: 85vw;
     margin: 0 auto;
     border-radius: 20px;
 }
@@ -51,20 +51,20 @@
     font-family: 'Roboto Mono', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
-.food-items{
-    width: 250px;
-    height: 160px;
+.food_images{
+    width: 90%;
+    height: auto;
     border-radius: 6px;
     margin: 0 auto;
 }
 
-.recipe-name{
+.recipe_name{
     color: black;
     font-size: 25px;
     text-decoration: none;
 }
 
-.recipe-name:hover {
+.recipe_name:hover {
     color: rgb(132, 97, 11);
 }
 
@@ -94,10 +94,10 @@
 }
 
 .thanking-text {
-    color: darkblue;
+    color: cyan;
 }
 
 .thanks {
-    color: darkblue;
+    color: cyan;
     text-decoration: none;
 }

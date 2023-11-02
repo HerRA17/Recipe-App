@@ -1,12 +1,10 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html>
     <head>
         <title>
             Recipe App - Home
         </title>
-        <meta name="viewport" content="width=device-width, initial scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% load static %}
         <link rel="shortcut icon" href="{% static 'recipes/images/home-icon.png' %}">
         <!-- CSS Custom -->
@@ -20,7 +18,7 @@
     </head>
     <body>
         <div class="nav-bar">
-            <!-- <img id="logo" src="{% static 'recipes/images/logo.png %}" width="150px"> -->
+            <img id="logo" src="{% static 'recipes/images/recipe.png' %}" > 
             <input id="search" type="text" placeholder=" Search for Ingredients">
         </div>
         <div class="recipe_grid">
@@ -32,9 +30,16 @@
                     <br>
                     <b>Difficulty: </b> {{object.calculate_difficulty}}
                 </div>
-                <img class="food_images" src="{{object.pic.url}}">
+                <img class="food_images" src="{{object.pic.url}}" >
             </div>
             {% endfor %}
         </div>
     </body>
+    <footer>
+        <div class="special-thanks">
+            <p class="thanking-text">Special thanks to:</p>
+            <br><br>
+            <a class="thanks" href="https://www.flaticon.com/free-icons/recipe" title="recipe icons">Recipe icons created by Freepik - Flaticon</a>
+        </div>
+    </footer>
 </html>
