@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Recipe-App Details</title>
+        <meta name="viewport" content="width=device-width, initial scale=1">
+        <link rel="shortcut icon" href="{% static 'recipes/images/search-icon.png' %}">
+        <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+        <style type="text/css">
+            body {
+                background: url("{% static 'recipes/images/food_background.jpg' %}") no-repeat fixed;
+                background-size: cover;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="detail_modal">
+            <h2>Details: {{object.name}}</h2>
+            <div class="details_body">
+                <div class="deatils_short">
+                    <b>Name:</b> {{object.name}}
+                    <br><br>
+                    <b>Cooking Time: </b> {{object.cooking_time}}
+                    <br><br>
+                    <b>Difficukty: </b> {{object.calculate_difficulty}}
+                    <br><br>
+                </div>
+            </div>
+            <div class="details_long">
+                <b>Ingredients: </b> {{object.ingredients}}
+                <br>
+            </div>
+        </div>
+    </body>
+    <div class="special-thanks">
+        <p class="thanking-text">Special thanks to:</p>
+        <br><br>
+        <a class="thanks" href="https://www.flaticon.com/free-icons/search" title="search icons">Search icons created by srip - Flaticon</a>
+    </div>
+</html>
