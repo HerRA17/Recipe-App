@@ -5,7 +5,7 @@ from django.shortcuts import reverse
 class Recipes(models.Model):
     name = models.CharField(max_length=50)
     ingredients = models.CharField(max_length=250)
-    id = models.PositiveBigIntegerField(primary_key=True)
+    # id = models.PositiveBigIntegerField(primary_key=True)
     cooking_time = models.FloatField(help_text='in minutes')
     description = models.TextField(default='No description available')
     pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')

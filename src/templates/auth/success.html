@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Recipe App | Logout</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="shortcut" href="{% static 'recipes/images/user-interface.png' %}">
+        <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+        <style type="text/css">
+            body {
+                background: url("{% static 'recipes/images/food_background.jpg' %}") no-repeat fixed;
+                background-size: cover;
+            } 
+            a {
+                margin-left: 10px; 
+            } 
+        </style>
+    </head>
+    <body>
+        <div class="auth-modal" style="width: 25%;">
+            <h2 style="border: 2px solid green; border-radius: 10px;
+            padding: 10px; background-color: rgb(161, 241, 161);
+            color: rgb(14, 59, 14);">
+                Successfully Logged out</h2>
+            <br>
+            <a class="login-btn" href="{% url 'login' %}">Login</a>
+        </div>
+    </body> 
+</html>

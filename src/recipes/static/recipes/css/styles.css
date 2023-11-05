@@ -83,7 +83,7 @@
 .recipe_name:hover {
     color: rgb(132, 97, 11);
 }
-
+/* Details */
 .detail_modal {
     width: 55%;
     background-color: rgba(225, 225, 225, 0.9);
@@ -117,4 +117,52 @@
 .thanks {
     color:black;
     text-decoration: none;
+}
+
+/* User */
+.auth-modal {
+    width: 25%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 5px 10px 15px;
+    margin: 10px auto;
+    margin-top: 23vh;
+    font-family: 'Roboto Mono', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+#error-login {
+    margin: 0 auto;
+    border: 3px solid rgb(243, 0, 0);
+    background-color: rgb(255, 116, 32);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.form-input {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.login-btn, .back-home-btn {
+    width: 70px;
+    font-family:'Roboto Mono', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    background-color: rgb(225, 116, 32);
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    text-align: center; 
+}
+
+.back-home-btn {
+    background-color: rgb( 123, 49, 33);
+}
+
+.login-btn:hover, .back-home-btn:hover {
+    filter: brightness(125%);
+    transition: 200ms;
 }
