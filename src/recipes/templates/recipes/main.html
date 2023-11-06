@@ -5,8 +5,6 @@
             Recipe App - Home
         </title>
         <br>
-        <a href="%url 'logout' %">Logout</a>
-        <br>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% load static %}
         <link rel="shortcut icon" href="{% static 'recipes/images/home-icon.png' %}">
@@ -23,6 +21,7 @@
         <div class="nav-bar">
             <img id="logo" src="{% static 'recipes/images/recipe.png' %}" > 
             <input id="search" type="text" placeholder=" Search for Ingredients">
+            <a href="{%url 'logout' %}" class="logout_btn">Logout</a>
         </div>
         <div class="recipe_grid">
             {% for object in object_list %}
