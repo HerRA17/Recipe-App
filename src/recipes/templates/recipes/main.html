@@ -21,7 +21,35 @@
         <div class="nav-bar">
             <img id="logo" src="{% static 'recipes/images/recipe.png' %}" > 
             <input id="search" type="text" placeholder=" Search for Ingredients">
-            <a href="{%url 'logout' %}" class="logout_btn">Logout</a>
+            <div class="search_box">
+                <form action="" method="GET" class="form">
+                    {% csrf_token %}
+                    <input type="text" name="recipes_search" class="form_search_input" 
+                    placeholder="Search Recipes & Ingredients" value="{{ form.recipes_search.value }}">
+                </form>
+                <br>
+                {{ form.recipe_search.value|default_if_none:"No search" }}
+
+                {% if 1 == 2%}
+                <div class="search_results">
+                    {% for object in object_list %}
+                    {% if "S" in object.name %}
+                    <p style="display: flex;"><a class="recipe_name" href="{{object.get_absolute_url}}">{{object.name}}</a></p>
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <a href="{%url 'logout' %}" class="logout_btn" style="width: 70px;
+            font-family:'Roboto Mono', 'Calibri', 'Trebuchet MS', sans-serif;
+            font-size: 16px;
+            background-color: rgb(225, 116, 32);
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            text-align: center; ">Logout</a>
         </div>
         <div class="recipe_grid">
             {% for object in object_list %}
