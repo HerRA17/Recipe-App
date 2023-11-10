@@ -228,7 +228,7 @@ def login_user(request):
             return redirect('recipes:recipes_home')
         else:
             messages.error(request, "An error occurred. Please try again.")
-            return redirect('recipes:login_user')
+            return redirect('recipes:login')
     else:
         return render(request, "recipes/login.html", {})
     

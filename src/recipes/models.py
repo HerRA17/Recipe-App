@@ -3,11 +3,18 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
+# model for individual Ingredients
+class Ingredient(models.Model):
+    name = models.CharField(max_length=80)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 # Recipes modal
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
-    ingredients = models.CharField(max_length=250)
-    id = models.PositiveBigIntegerField(primary_key=True)
+    ingredients = models.ManyToManyField(Ingredient)
     cooking_time = models.FloatField(help_text='in minutes')
     instructions = models.TextField(default='No instructions available')
     pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
@@ -36,16 +43,7 @@ class Recipe(models.Model):
     
     def __str__(self):
         return self.name
-    
-# model for individual Ingredients
-class Ingredient(models.Model):
-    name = models.CharField(max_length=80)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
+# Recipe Ingredients modal - serves as a junction table for a many to many relationship between Recipes & Ingredients
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(
         "Recipe", on_delete=models.CASCADE, related_name="ingredients_used"

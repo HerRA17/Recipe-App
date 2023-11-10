@@ -1,62 +1,140 @@
 from django.test import TestCase
+from .models import Ingredient, Recipe
 from django.urls import reverse
-from .models import Recipes
-# Create your tests here.
-class RecipesTest(TestCase):
-    def setUpTestData():
-        # Set up non-modified objects used by all test methods
-        Recipes.objects.create(name='Tea', ingredients='tea-leaves, water, sugar(optional)', description= 'Add tea-leaves to the bioling water, wait 5 minutes to sit the tea, and add sugar', id= 1, cooking_time= 5)
+from django.contrib.auth.models import User
+from .forms import RecipeSearchForm 
 
-    def test_recipe_name(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # get metadata for the 'name' filed and use it toq uery its data
-        field_label = recipe._meta.get_field('name').verbose_name
-        # compare the value to the expected result
-        self.assertEqual(field_label, 'name')
+class RecipeModelTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.ingredient1 = Ingredient.objects.create(name="Salt")
+        self.ingredient2 = Ingredient.objects.create(name="Lemon")
+        self.recipe = Recipe.objects.create(
+            name="Sample Recipe",
+            cooking_time=30,
+            instructions="Test instructions",
+            difficulty="Hard",
+            author=self.user,  
+        )
+        self.recipe.ingredients.add(self.ingredient1, self.ingredient2)
 
-    def test_recipe_name_max_length(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # get meta data for the recipe_name field and use it to query its max length
-        max_length = recipe._meta.get_field('name').max_length
-        # compare the value to the expected result
-        self.assertEqual(max_length, 50)
-    
-    def test_recipe_ingredients(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # get meta data for the recipe_ingredients field and use it to query its max length
-        max_length_ing = recipe._meta.get_field('ingredients').max_length
-        # compare the value to the expected result
-        self.assertEqual(max_length_ing, 250)
-    
-    def test_cookingtime_helptext(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # get meta data for the recipe_cookingtime field and use it to query the expected text
-        recipe_cookingtime = recipe._meta.get_field('cooking_time').help_text
-        # compare the value to the expected result
-        self.assertEqual(recipe_cookingtime, 'in minutes')
-    
-    def test_description(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # Retrieve the actual description from the database
-        recipe_description = recipe.description
-        # compare the actual description to the expected result
-        expected_description = 'Add tea-leaves to the bioling water, wait 5 minutes to sit the tea, and add sugar'
-        self.assertEqual(recipe_description, expected_description)
-    
-    def test_get_absolute_url(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # compare the value to the expected result
-        self.assertEqual(recipe.get_absolute_url(), '/list/1')
+    def test_recipe_has_ingredients(self):
+        self.assertEqual(self.recipe.ingredients.count(), 2)
+
+    def test_calculate_difficulty_hard(self):
+        self.recipe.cooking_time = 30
+        self.recipe.ingredients.add(
+            Ingredient.objects.create(name="Ingredient3"),
+            Ingredient.objects.create(name="Ingredient4"),
+            Ingredient.objects.create(name="Ingredient5"),
+            Ingredient.objects.create(name="Ingredient6"),
+        )
+        self.recipe.save()
+        calculated_difficulty = self.recipe.calculate_difficulty()
+        print(f"Calculated Difficulty: {calculated_difficulty}")
+        self.assertEqual(calculated_difficulty, "Hard")
+
+    def test_calculate_difficulty_medium(self):
+        self.recipe.cooking_time = 9
+        self.recipe.ingredients.add(
+            Ingredient.objects.create(name="Ingredient3"),
+            Ingredient.objects.create(name="Ingredient4"),
+            Ingredient.objects.create(name="Ingredient5"),
+            Ingredient.objects.create(name="Ingredient6"),
+            Ingredient.objects.create(name="Ingredient7"),
+        )
+        self.recipe.save()
+        calculated_difficulty = self.recipe.calculate_difficulty()
+        print(f"Calculated Difficulty: {calculated_difficulty}")
+        self.assertEqual(calculated_difficulty, "Medium")
+
+    def test_create_or_update_ingredients_signal(self):
+        ingredient3 = Ingredient.objects.create(name="Sugar")
+        self.recipe.ingredients.add(ingredient3)
+        self.recipe.save()
+        ingredient1_updated = Ingredient.objects.get(name="Salt")
+        self.assertEqual(ingredient1_updated.updated_at.date(), self.recipe.updated_at.date())
+
+class IngredientModelTest(TestCase):
+    def test_ingredient_str(self):
+        ingredient = Ingredient.objects.create(name="Tomato")
+        self.assertEqual(str(ingredient), "Tomato")
+
+class RecipesListViewTest(TestCase):
+    def test_recipes_list_view(self):
+        user = User.objects.create_user(username="testuser", password="testpassword")
+        recipe1 = Recipe.objects.create(name="Recipe 1", cooking_time=30, author=user)
+        recipe2 = Recipe.objects.create(name="Recipe 2", cooking_time=40, author=user)
+        url = reverse('recipes:recipes_list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        recipes_in_context = list(response.context['recipes'])
+        self.assertIn(recipe1, recipes_in_context)
+        self.assertIn(recipe2, recipes_in_context)
+
+class RecipesDetailViewTest(TestCase):
+    def test_recipe_detail_view(self):
+        user = User.objects.create_user(username="testuser", password="testpassword")
+        recipe = Recipe.objects.create(name="Recipe", cooking_time=25, author=user)
+        url = reverse('recipes:recipes_details', args=[recipe.pk]) 
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['recipe'], recipe)
+
+class RecipeSearchFormTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        ingredient1 = Ingredient.objects.create(name="Ingredient 1")
+        ingredient2 = Ingredient.objects.create(name="Ingredient 2")
+        recipe1 = Recipe.objects.create(name="Recipe 1", cooking_time=30)
+        recipe2 = Recipe.objects.create(name="Recipe 2", cooking_time=60)
+        recipe1.ingredients.add(ingredient1)
+        recipe2.ingredients.add(ingredient2)
+
         
-    
-    def test_calculate_difficulty(self):
-        # get a Recipe object to test
-        recipe = Recipes.objects.get(id=1)
-        # compare the value to the expected result
-        self.assertEqual(recipe.calculate_difficulty(), 'Easy')
+        for i in range(3, 13):  
+            recipe = Recipe.objects.create(
+                name=f"Recipe {i}",
+                cooking_time=(i + 1) * 10
+            )
+            recipe.ingredients.add(ingredient1)
+            recipe.ingredients.add(ingredient2)
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
+        self.client.login(username="testuser", password="testpassword")
+
+    def test_form_fields(self):
+        form_data = {
+            "Recipe_Name": "Recipe 1",
+            "Ingredients": [1],
+            "chart_type": "#1",
+        }
+        form = RecipeSearchForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_form_missing_data(self):
+        form_data = {} 
+        form = RecipeSearchForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors["__all__"][0],
+            "Please enter a recipe name or ingredient.",
+        )
+
+    def test_recipe_list_view(self):
+        response = self.client.get(reverse('recipes:recipes_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "recipes/recipes_list.html")
+
+    def test_chart_generation(self):
+        form_data = {
+            "Recipe_Name": "",
+            "Ingredients": [1],
+            "chart_type": "#1",
+        }
+        response = self.client.get(reverse('recipes:recipes_list'), form_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("chart_image" in response.context)
