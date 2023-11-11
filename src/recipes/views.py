@@ -158,12 +158,12 @@ def render_chart(request, chart_type, data, **kwargs):
     ax = fig.add_subplot(111)
 
     if chart_type == "#1":
-        plt.name("Cooking Time by Recipe", fontsize=20)
+        plt.title("Cooking Time by Recipe", fontsize=20)
         plt.bar(data["name"], data["cooking_time"])
         plt.xlabel("Recipes", fontsize=16)
         plt.ylabel("Cooking Time (min)", fontsize=16)
     elif chart_type == "#2":
-        plt.name("Recipes Cooking Time Comparison", fontsize=20)
+        plt.title("Recipes Cooking Time Comparison", fontsize=20)
         labels = kwargs.get("labels")
         plt.pie(data["cooking_time"], labels=None, autopct="%1.1f%%")
         plt.legend(
@@ -173,7 +173,7 @@ def render_chart(request, chart_type, data, **kwargs):
             fontsize=12,
         )
     elif chart_type == "#3":
-        plt.name("Cooking Time by Recipe", fontsize=20)
+        plt.title("Cooking Time by Recipe", fontsize=20)
         x_values = data["name"].to_numpy()  
         y_values = data["cooking_time"].to_numpy()  
         plt.plot(x_values, y_values)

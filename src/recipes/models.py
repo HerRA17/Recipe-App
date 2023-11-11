@@ -11,6 +11,23 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+    
+# Recipe Ingredients modal - serves as a junction table for a many to many relationship between Recipes & Ingredients
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(
+        "Recipe", on_delete=models.CASCADE, related_name="ingredients_used"
+    )
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="ingredients_used"
+    )
+
+    def __str__(self):
+        return f"{self.ingredient} - {self.recipe}"
+    
 # Recipes modal
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
@@ -43,21 +60,7 @@ class Recipe(models.Model):
     
     def __str__(self):
         return self.name
-# Recipe Ingredients modal - serves as a junction table for a many to many relationship between Recipes & Ingredients
-class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(
-        "Recipe", on_delete=models.CASCADE, related_name="ingredients_used"
-    )
-    ingredient = models.ForeignKey(
-        Ingredient,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="ingredients_used"
-    )
 
-    def __str__(self):
-        return f"{self.ingredient} - {self.recipe}"
 # modal Profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -28,6 +28,8 @@ class RecipeModelTest(TestCase):
             Ingredient.objects.create(name="Ingredient4"),
             Ingredient.objects.create(name="Ingredient5"),
             Ingredient.objects.create(name="Ingredient6"),
+            Ingredient.objects.create(name="Ingredient7"),
+            Ingredient.objects.create(name="Ingredient8")
         )
         self.recipe.save()
         calculated_difficulty = self.recipe.calculate_difficulty()
