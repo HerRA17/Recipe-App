@@ -140,3 +140,13 @@ class RecipeSearchFormTest(TestCase):
         response = self.client.get(reverse('recipes:recipes_list'), form_data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("chart_image" in response.context)
+
+    def test_search_by_ingredients(self):
+        salt = Ingredient.objects.create(name="Salt")
+        lemon = Ingredient.objects.create(name="Lemon")
+        recipe = Recipe.objects.create(name="Recipe with Salt and Lemon", cooking_time=20)
+        recipe.ingredients.add(salt, lemon)
+        response = self.client.post('/search_recipes/', {'Ingredient': ['Salt','Lemon']})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Recipe with Salt and Lemon', response.content.decode())
+        print(response.content)
