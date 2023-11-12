@@ -240,8 +240,10 @@ def logout_user(request):
 def profile(request, pk):
     if request.user.is_authenticated:
         try:
-            profile = Profile.objects.get(user_id=pk)
-            user = profile.user
+            user = get_object_or_404(User, id=pk)
+            profile, created = Profile.objects.get_or_create(user=user)
+            print(profile)
+            # user = profile.user
             user_recipes = Recipe.objects.filter(author=user)
             
             form = create_recipe(request, pk)  
