@@ -32,7 +32,7 @@ class RecipeIngredient(models.Model):
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
     ingredients = models.ManyToManyField(Ingredient)
-    cooking_time = models.FloatField(help_text='in minutes')
+    cooking_time = models.FloatField()
     instructions = models.TextField(default='No instructions available')
     pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
     DIFFICULTY_CHOICES = [
