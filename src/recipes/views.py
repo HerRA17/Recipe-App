@@ -18,6 +18,7 @@ from operator import and_
 
 @login_required
 def create_recipe(request, user_id):
+    print("POST Data:", request.POST)
     form = RecipeForm(request.POST or None, request.FILES or None)
     
     if request.method == 'POST':
@@ -25,28 +26,33 @@ def create_recipe(request, user_id):
         
         if ingredients_str:
             ingredients_list = [ingredient.strip() for ingredient in ingredients_str.split(",")]
+            print("Ingredients List:", ingredients_list)
             
         if form.is_valid():
             recipe = form.save(commit=False)
             
             ingredients_count = 0
             profile = Profile.objects.get(user_id=user_id)
+            print("Profile:", profile)
             recipe.author = profile.user
             recipe.save()
+            print("Recipe created:", recipe)
 
             for ingredient_name in ingredients_list:
                 ingredient, created = Ingredient.objects.get_or_create(name=ingredient_name)
-
+                print(f"Ingredient: {ingredient}, Created: {created}")
                 if created:
                     ingredients_count += 1
                 recipe.ingredients.add(ingredient)  
 
             recipe.difficulty = recipe.calculate_difficulty()
+            print("Calculated Difficulty:", recipe.difficulty)
             recipe.save()
 
             messages.success(request, "Recipe added successfully.")
             return redirect('recipes:profile', pk=user_id)
         else:
+            print("Form Errors:", form.errors)
             messages.error(request, "Form validation failed. Please check the entered data.")
     
     return form
