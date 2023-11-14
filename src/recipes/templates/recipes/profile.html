@@ -75,7 +75,7 @@
                           {{ form.instructions }}
                       </div>
                       <div class="form-group">
-                        <label for="id_pic" class="label-width">Image:</label>
+                        <label for="id_pic" accept="image/*" class="label-width">Image:</label>
                         {{ form.pic }}
                       </div>                    
                       <div class="form-group text-center">
@@ -100,7 +100,7 @@
                         </div>
                         <div class="col-md-8 bg-dark text-white">
                             <div class="card-body" style="color: rgb(230, 226, 226); font-weight: lighter;">
-                                <h5 class="card-title">{{ recipe.title }}</h5>
+                                <h5 class="card-title">{{ recipe.name }}</h5>
                                 <p class="card-text"><small style="color: rgb(213, 209, 209); font-weight: lighter;">Last updated {{ recipe.created_at|timesince }} ago</small></p>
                                 {% if request.user.username == profile.user.username %}
                                     <a href="{% url 'recipes:recipes_details' recipe.id %}" title="View">
