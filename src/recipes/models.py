@@ -30,7 +30,7 @@ class RecipeIngredient(models.Model):
     
 # Recipes modal
 class Recipe(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     ingredients = models.ManyToManyField(Ingredient)
     cooking_time = models.FloatField()
     instructions = models.TextField(default='No instructions available')
