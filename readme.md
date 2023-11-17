@@ -15,16 +15,15 @@ To begin usign the Recipe-App Management, follow the following steps:
     * Django 4.2.6
 + Installation:
     1. Clone the project repository from github to your local machine.
-       ´´´git clone https://github.com/torbalansky/recipe-app.git
-           cd recipe-app
-       ´´´
+       ```git clone https://github.com/torbalansky/recipe-app.git```
+        ```cd recipe-app```
     2. Install all required Python packages.
-       ´´´pip install -r requirements.txt´´´
+       ```pip install -r requirements.txt```
     3. Configure the databases settings in the project's settings file.
     4. Apply necessary database migrations.
-       ´´´python manage.py migrate´´´
+       ```python manage.py migrate```
     5. Launch the development server.
-        ´´´python manage.py runserver´´´
+        ```python manage.py runserver```
 + Important remarks:
     Sensitive data, such as the secret key, DB details, and debugging information, were stored in a .env file. The key that was visible in previous steps is a dummy.
 
