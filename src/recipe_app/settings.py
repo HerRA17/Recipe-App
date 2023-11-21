@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpe
 
 DEBUG=config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://recipe-app-new-ccb69d876db5.herokuapp.com/']
 
 # Application definition
 
