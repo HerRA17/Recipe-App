@@ -83,23 +83,13 @@ WSGI_APPLICATION = 'recipe_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # configuration for Heroku
-if  os.environ.get('DATABASE_URL'):
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=500)
-    }
-else:
-    # configuration for local use
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME' : config('DB_NAME'),
-            'USER' : config('DB_USER'),
-            'PASSWORD' : config('DB_PASSWORD'), 
-            'HOST' : config('DB_HOST'),
-            'PORT' : config('DB_PORT')
-            } 
-    }
-# 'NAME': BASE_DIR / 'db.sqlite3' 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': BASE_DIR / 'db.sqlite3' 
+              } 
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
