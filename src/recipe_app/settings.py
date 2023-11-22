@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpe
 
 DEBUG=config('DEBUG')
 
-ALLOWED_HOSTS = ['https://recipe-app-new-ccb69d876db5.herokuapp.com/']
+ALLOWED_HOSTS = ['https://recipe-app-new-ccb69d876db5.herokuapp.com/', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -82,14 +82,22 @@ WSGI_APPLICATION = 'recipe_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': BASE_DIR / 'db.sqlite3' 
-              } 
-}
-
+# configuration for Heroku
+if 'DATABaSE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+else:
+    # configuration for local use
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME' : config('DB_NAME'),
+            'USER' : config('DB_USER'),
+            'PASSWORD' : config('DB_PASSWORD'), 
+            'HOST' : config('DB_HOST'),
+            'PORT' : config('DB_PORT')
+            } 
+    }
+# 'NAME': BASE_DIR / 'db.sqlite3' 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -135,7 +143,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
