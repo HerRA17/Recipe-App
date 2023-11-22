@@ -85,11 +85,8 @@ WSGI_APPLICATION = 'recipe_app.wsgi.application'
 # configuration for Heroku
 if  os.environ.get('DATABASE_URL'):
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': BASE_DIR / 'db.sqlite3' 
-              } 
-}
+        'default': dj_database_url.config(conn_max_age=500)
+    }
 else:
     # configuration for local use
     DATABASES = {
