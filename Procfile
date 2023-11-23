@@ -1,1 +1,2 @@
-web: PYTHON=src gunicorn recipe_app.wsgi --log-file -
+web: gunicorn recipe_app.wsgi --log-file -
+
