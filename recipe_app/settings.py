@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpevh4xz)3w)6xuq6kv7g&3^xf^)gr-n3&p#%9')
 
-DEBUG=True # checking what is causing the bug 
+DEBUG=False # checking what is causing the bug 
 
-ALLOWED_HOSTS = ['recipe-app-new-ccb69d876db5.herokuapp.com/', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
