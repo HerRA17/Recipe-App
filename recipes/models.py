@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 # model for individual Ingredients
 class Ingredient(models.Model):
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=180)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -34,7 +34,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
     cooking_time = models.FloatField()
     instructions = models.TextField(default='No instructions available')
-    pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
+    pic = models.ImageField(upload_to='recipes/', default='no_picture.jpg')
     DIFFICULTY_CHOICES = [
         ('Easy', 'Easy'),
         ('Medium', 'Medium'),
