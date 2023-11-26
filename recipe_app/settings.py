@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-# remove dotenv and decouple
-# from decouple import config
-# import environ
-# from dotenv import load_dotenv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,15 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# initialize environment variable
-# env = environ.Env()
-# reading .env file
-# environ.Env.read_env(env_file=os.path.join(BASE_DIR,'src', '.env'))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-ml49cp(e)=yakpevh4xz)3w)6xuq6kv7g&3^xf^)gr-n3&p#%9')
 
 DEBUG=False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://recipe-app-new-ccb69d876db5.herokuapp.com/', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -45,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django_extensions',
     'recipes'
 ]
 
