@@ -95,5 +95,5 @@ pyvenv.cfg
 *.bak
 # Database
 *.sqlite3
-# static files
+# static files 
 /staticfiles/

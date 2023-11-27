@@ -43,11 +43,11 @@ To begin using the Recipe-App Management, follow these steps:
 * **Python** (3.11) - [Link to Python](https://www.python.org/)
 * **Django** (4.2.6) - [Link to Django](https://www.djangoproject.com/)
 * Other Python libraries (please review the requirements.txt file)
-* **Databases**:
-    * Initially with the default SQLite
-    * To host in Pythonanywhere, I migrated it to PostgreSQL.
+* **Databases alternatives**:
+    * The default SQLite
+    * To host in Pythonanywhere, it is suggested PostgreSQL for example.
 
-+ **Database Migration Steps**:
++ **Database Migration Steps for PostgreSQL usage**:
     1. Create a database either in the psql shell or AdminPg4.
     2. Install package psycopg2.
     3. Proceed with `py manage.py dumpdata > name_file` (ex. data.json) (can be python, depending on the OS you are using).
